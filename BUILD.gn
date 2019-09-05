@@ -1,0 +1,11 @@
+# Copyright (C) 2019. Huawei Technologies Co., Ltd. All rights reserved.
+
+import("//build/zidane.gni")
+
+
+zidane_shared_library("cjson") {
+    sources = [
+        "cJSON.c",
+    ]
+    subsystem_name = "communication"
+}
