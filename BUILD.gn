@@ -2,10 +2,16 @@
 
 import("//build/zidane.gni")
 
+config("cJSON_config") {
+    include_dirs = [
+      ".",
+    ]
+}
 
 zidane_shared_library("cjson") {
     sources = [
         "cJSON.c",
     ]
+    public_configs = [ ":cJSON_config" ]
     subsystem_name = "communication"
 }
