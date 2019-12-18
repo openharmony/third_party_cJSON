@@ -1,6 +1,6 @@
 # Copyright (C) 2019. Huawei Technologies Co., Ltd. All rights reserved.
 
-import("//build/zidane.gni")
+import("//build/harmonyos.gni")
 
 config("cJSON_config") {
     include_dirs = [
@@ -8,7 +8,7 @@ config("cJSON_config") {
     ]
 }
 
-zidane_shared_library("cjson") {
+harmonyos_shared_library("cjson") {
     sources = [
         "cJSON.c",
     ]
