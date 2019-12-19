@@ -8,10 +8,20 @@ config("cJSON_config") {
     ]
 }
 
-harmonyos_shared_library("cjson") {
+harmonyos_source_set("cjson_src") {
     sources = [
         "cJSON.c",
     ]
-    public_configs = [ ":cJSON_config" ]
+    configs = [":cJSON_config"]
+}
+
+harmonyos_static_library("cjson_static") {
+    deps = [":cjson_src"]
+    public_configs = [":cJSON_config"]
+}
+
+harmonyos_shared_library("cjson") {
+    deps = [":cjson_src"]
+    public_configs = [":cJSON_config"]
     subsystem_name = "communication"
 }
