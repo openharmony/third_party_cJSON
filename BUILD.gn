@@ -23,5 +23,5 @@ harmonyos_static_library("cjson_static") {
 harmonyos_shared_library("cjson") {
     deps = [":cjson_src"]
     public_configs = [":cJSON_config"]
-    subsystem_name = "communication"
+    subsystem_name = "multimodalinput"
 }
