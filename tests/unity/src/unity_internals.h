@@ -7,7 +7,7 @@
 #ifndef UNITY_INTERNALS_H
 #define UNITY_INTERNALS_H
 
-#include "../examples/unity_config.h"
+#include "test_fwk.h"
 
 #ifndef UNITY_EXCLUDE_SETJMP_H
 #include <setjmp.h>
@@ -241,7 +241,7 @@ typedef UNITY_FLOAT_TYPE UNITY_FLOAT;
 #ifndef UNITY_OUTPUT_CHAR
 /* Default to using putchar, which is defined in stdio.h */
 #include <stdio.h>
-#define UNITY_OUTPUT_CHAR(a) (void)putchar(a)
+#define UNITY_OUTPUT_CHAR(a) LiteTestPrint("%c", a)
 #else
   /* If defined as something else, make sure we declare it here so it's ready for use */
   #ifdef UNITY_OUTPUT_CHAR_HEADER_DECLARATION
@@ -253,7 +253,7 @@ extern void UNITY_OUTPUT_CHAR_HEADER_DECLARATION;
 #ifdef UNITY_USE_FLUSH_STDOUT
 /* We want to use the stdout flush utility */
 #include <stdio.h>
-#define UNITY_OUTPUT_FLUSH() (void)fflush(stdout)
+#define UNITY_OUTPUT_FLUSH() LiteTestPrint("")
 #else
 /* We've specified nothing, therefore flush should just be ignored */
 #define UNITY_OUTPUT_FLUSH()

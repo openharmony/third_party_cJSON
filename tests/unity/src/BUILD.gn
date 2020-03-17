@@ -1,0 +1,16 @@
+source_set("test_unity") {
+    configs += [ "//build/lite/config:compile_liteos_m" ]
+    sources = [
+        "unity.c",
+    ]
+    include_dirs = [
+        "//kernel/l1_m/liteos/components/lib/libsec/include",
+        "//vendor/huawei/watchgt/devkit/hal/include",
+        "//utils/include",
+        "//foundations/distributedschedule/interfaces/innerkits/samgr_lite/samgr",
+        "//foundations/communication/interfaces/innerkits/mpc_lite/transport",
+        "//foundations/communication/interfaces/innerkits/mpc_lite",
+        "//test/lite/testservice/include",
+        "//third_party/cJSON/tests/unity/src",
+    ]
+}
