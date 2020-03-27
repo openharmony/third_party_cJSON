@@ -1,5 +1,4 @@
 source_set("test_unity") {
-    configs += [ "//build/lite/config:compile_liteos_m" ]
     sources = [
         "unity.c",
     ]
