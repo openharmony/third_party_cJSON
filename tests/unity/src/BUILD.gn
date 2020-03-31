@@ -3,7 +3,6 @@ source_set("test_unity") {
         "unity.c",
     ]
     include_dirs = [
-        "//kernel/l1_m/liteos/components/lib/libsec/include",
         "//vendor/huawei/watchgt/devkit/hal/include",
         "//utils/include",
         "//foundations/distributedschedule/interfaces/innerkits/samgr_lite/samgr",
