@@ -5,9 +5,9 @@ source_set("test_unity") {
     include_dirs = [
         "//vendor/huawei/watchgt/devkit/hal/include",
         "//utils/include",
-        "//foundations/distributedschedule/interfaces/innerkits/samgr_lite/samgr",
-        "//foundations/communication/interfaces/innerkits/mpc_lite/transport",
-        "//foundations/communication/interfaces/innerkits/mpc_lite",
+        "//foundation/distributedschedule/interfaces/innerkits/samgr_lite/samgr",
+        "//foundation/distributedschedule/interfaces/innerkits/samgr_lite/communication/mpc/transport",
+        "//foundation/distributedschedule/interfaces/innerkits/samgr_lite/communication/mpc",
         "//test/lite/testservice/include",
         "//third_party/cJSON/tests/unity/src",
     ]
