@@ -1,6 +1,6 @@
 # Copyright (C) 2019. Huawei Technologies Co., Ltd. All rights reserved.
 
-import("//build/harmonyos.gni")
+import("//build/ohos.gni")
 
 config("cJSON_config") {
     include_dirs = [
@@ -8,19 +8,19 @@ config("cJSON_config") {
     ]
 }
 
-harmonyos_source_set("cjson_src") {
+ohos_source_set("cjson_src") {
     sources = [
         "cJSON.c",
     ]
     configs = [":cJSON_config"]
 }
 
-harmonyos_static_library("cjson_static") {
+ohos_static_library("cjson_static") {
     deps = [":cjson_src"]
     public_configs = [":cJSON_config"]
 }
 
-harmonyos_shared_library("cjson") {
+ohos_shared_library("cjson") {
     deps = [":cjson_src"]
     public_configs = [":cJSON_config"]
     subsystem_name = "hiviewdfx"
