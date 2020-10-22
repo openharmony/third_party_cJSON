@@ -18,6 +18,9 @@ config("cjson_config") {
     include_dirs = [
         ".",
     ]
+    ldflags = [
+      "-lm",
+    ]
 }
 
 cjson_sources = [
