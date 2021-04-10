@@ -11,19 +11,37 @@
 #See the License for the specific language governing permissions and
 #limitations under the License.
 
-import("//build/ohos.gni")
+import("//build/lite/config/component/lite_component.gni")
+import("//build/lite/ndk/ndk.gni")
 
-config("cJSON_config") {
+config("cjson_config") {
   include_dirs = [ "." ]
+  ldflags = [ "-lm" ]
 }
 
-ohos_static_library("cjson_static") {
-  sources = [ "cJSON.c" ]
-  public_configs = [ ":cJSON_config" ]
+cjson_sources = [
+  "cJSON.c",
+  "cJSON_Utils.c",
+]
+
+lite_library("cjson_static") {
+  target_type = "static_library"
+  sources = cjson_sources
+  public_configs = [ ":cjson_config" ]
 }
 
-ohos_shared_library("cjson") {
-  deps = [ ":cjson_static" ]
-  public_configs = [ ":cJSON_config" ]
-  subsystem_name = "hiviewdfx"
+lite_library("cjson_shared") {
+  target_type = "shared_library"
+  sources = cjson_sources
+  public_configs = [ ":cjson_config" ]
+}
+
+ndk_lib("cjson_ndk") {
+  if (board_name != "hi3861v100") {
+    lib_extension = ".so"
+    deps = [ ":cjson_shared" ]
+  } else {
+    deps = [ ":cjson_static" ]
+  }
+  head_files = [ "//third_party/cJSON" ]
 }
