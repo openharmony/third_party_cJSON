@@ -11,19 +11,50 @@
 #See the License for the specific language governing permissions and
 #limitations under the License.
 
-import("//build/ohos.gni")
+if (defined(ohos_lite)) {
+  import("//build/lite/config/component/lite_component.gni")
+  import("//build/lite/ndk/ndk.gni")
+  config("cjson_config") {
+    include_dirs = [ "." ]
+    ldflags = [ "-lm" ]
+  }
+  cjson_sources = [
+    "cJSON.c",
+    "cJSON_Utils.c",
+  ]
 
-config("cJSON_config") {
-  include_dirs = [ "." ]
+  lite_library("cjson_static") {
+    target_type = "static_library"
+    sources = cjson_sources
+    public_configs = [ ":cjson_config" ]
+  }
+  lite_library("cjson_shared") {
+    target_type = "shared_library"
+    sources = cjson_sources
+    public_configs = [ ":cjson_config" ]
+  }
+  ndk_lib("cjson_ndk") {
+    if (board_name != "hi3861v100") {
+      lib_extension = ".so"
+      deps = [ ":cjson_shared" ]
+    } else {
+      deps = [ ":cjson_static" ]
+    }
+    head_files = [ "//third_party/cJSON" ]
+  }
+} else {
+  import("//build/ohos.gni")
+  config("cJSON_config") {
+    include_dirs = [ "." ]
+  }
+  ohos_static_library("cjson_static") {
+    sources = [ "cJSON.c" ]
+    public_configs = [ ":cJSON_config" ]
+  }
+  ohos_shared_library("cjson") {
+    deps = [ ":cjson_static" ]
+    public_configs = [ ":cjson_config" ]
+    subsystem_name = "hiviewdfx"
+  }
 }
 
-ohos_static_library("cjson_static") {
-  sources = [ "cJSON.c" ]
-  public_configs = [ ":cJSON_config" ]
-}
-
-ohos_shared_library("cjson") {
-  deps = [ ":cjson_static" ]
-  public_configs = [ ":cJSON_config" ]
-  subsystem_name = "hiviewdfx"
-}
