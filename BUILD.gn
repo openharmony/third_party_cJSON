@@ -53,7 +53,7 @@ if (defined(ohos_lite)) {
   }
   ohos_shared_library("cjson") {
     deps = [ ":cjson_static" ]
-    public_configs = [ ":cjson_config" ]
+    public_configs = [ ":cJSON_config" ]
     subsystem_name = "hiviewdfx"
   }
 }
