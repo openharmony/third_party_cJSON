@@ -12,8 +12,6 @@
 #limitations under the License.
 
 if (defined(ohos_lite)) {
-  import("//build/lite/config/component/lite_component.gni")
-  import("//build/lite/ndk/ndk.gni")
   config("cjson_config") {
     include_dirs = [ "." ]
     ldflags = [ "-lm" ]
@@ -23,24 +21,14 @@ if (defined(ohos_lite)) {
     "cJSON_Utils.c",
   ]
 
-  lite_library("cjson_static") {
-    target_type = "static_library"
+  static_library("cjson_static") {
     sources = cjson_sources
     public_configs = [ ":cjson_config" ]
   }
-  lite_library("cjson_shared") {
-    target_type = "shared_library"
+
+  shared_library("cjson_shared") {
     sources = cjson_sources
     public_configs = [ ":cjson_config" ]
-  }
-  ndk_lib("cjson_ndk") {
-    if (board_name != "hi3861v100") {
-      lib_extension = ".so"
-      deps = [ ":cjson_shared" ]
-    } else {
-      deps = [ ":cjson_static" ]
-    }
-    head_files = [ "//third_party/cJSON" ]
   }
 } else {
   import("//build/ohos.gni")
@@ -50,10 +38,13 @@ if (defined(ohos_lite)) {
   ohos_static_library("cjson_static") {
     sources = [ "cJSON.c" ]
     public_configs = [ ":cJSON_config" ]
+    part_name = "cjson"
+    subsystem_name = "thirdparty"
   }
   ohos_shared_library("cjson") {
     deps = [ ":cjson_static" ]
     public_configs = [ ":cJSON_config" ]
-    subsystem_name = "hiviewdfx"
+    part_name = "cjson"
+    subsystem_name = "thirdparty"
   }
 }
