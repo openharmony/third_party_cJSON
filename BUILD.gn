@@ -21,6 +21,13 @@ if (defined(ohos_lite)) {
     "cJSON_Utils.c",
   ]
 
+  if (board_chaintool_type == "iccarm") {
+    cflags = [
+      "--diag_suppress",
+      "Pe513",
+    ]
+    cflags_cc = cflags
+  }
   static_library("cjson_static") {
     sources = cjson_sources
     public_configs = [ ":cjson_config" ]
