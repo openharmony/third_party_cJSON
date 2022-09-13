@@ -21,7 +21,7 @@ if (defined(ohos_lite)) {
     "cJSON_Utils.c",
   ]
 
-  if (board_chaintool_type == "iccarm") {
+  if (defined(board_toolchain_type) && board_toolchain_type == "iccarm") {
     cflags = [
       "--diag_suppress",
       "Pe513",
