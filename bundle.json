@@ -10,7 +10,7 @@
     "dirs": {},
     "scripts": {},
     "component": {
-        "name": "cJSON",
+        "name": "cjson",
         "subsystem": "thirdparty",
         "syscap": [],
         "features": [],
