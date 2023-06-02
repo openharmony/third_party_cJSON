@@ -53,6 +53,10 @@ if (defined(ohos_lite)) {
   ohos_shared_library("cjson") {
     deps = [ ":cjson_static" ]
     public_configs = [ ":cJSON_config" ]
+    innerapi_tags = [
+      "chipsetsdk",
+      "platformsdk_indirect",
+    ]
     part_name = "cjson"
     subsystem_name = "thirdparty"
     install_images = [
