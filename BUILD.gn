@@ -47,7 +47,7 @@ if (defined(ohos_lite)) {
   ohos_static_library("cjson_static") {
     sources = [ "cJSON.c" ]
     public_configs = [ ":cJSON_config" ]
-    part_name = "cjson"
+    part_name = "cJSON"
     subsystem_name = "thirdparty"
   }
   ohos_shared_library("cjson") {
@@ -57,7 +57,7 @@ if (defined(ohos_lite)) {
       "chipsetsdk",
       "platformsdk_indirect",
     ]
-    part_name = "cjson"
+    part_name = "cJSON"
     subsystem_name = "thirdparty"
     install_images = [
       "system",
