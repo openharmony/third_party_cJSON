@@ -23,17 +23,7 @@
         },
         "build": {
             "sub_component": [],
-            "inner_kits": [
-                {
-                    "name": "//third_party/cJSON:cjson",
-                    "header": {
-                        "header_files": [
-                            "cJSON.h"
-                        ],
-                        "header_base": "//third_party/cJSON"
-                    }
-                }
-            ],
+            "inner_kits": [],
             "test": []
         }
     }
