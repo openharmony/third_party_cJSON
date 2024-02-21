@@ -51,7 +51,7 @@ if (defined(ohos_lite)) {
     subsystem_name = "thirdparty"
   }
   ohos_shared_library("cjson") {
-    deps = [ ":cjson_static" ]
+    sources = [ "cJSON.c" ]
     public_configs = [ ":cJSON_config" ]
     innerapi_tags = [
       "chipsetsdk",
