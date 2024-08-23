@@ -45,6 +45,7 @@ if (defined(ohos_lite)) {
     defines = [ "CJSON_NESTING_LIMIT=(128)" ]
   }
   ohos_static_library("cjson_static") {
+    branch_protector_ret = "pac_ret"
     sources = [ "cJSON.c" ]
     public_configs = [ ":cJSON_config" ]
     part_name = "cJSON"
