@@ -2448,7 +2448,7 @@ CJSON_PUBLIC(cJSON*) cJSON_AddArrayToObject(cJSON * const object, const char * c
 
 CJSON_PUBLIC(cJSON *) cJSON_DetachItemViaPointer(cJSON *parent, cJSON * const item)
 {
-    if ((parent == NULL) || (item == NULL))
+    if ((parent == NULL) || (item == NULL) || (item != parent->child && item->prev == NULL))
     {
         return NULL;
     }
