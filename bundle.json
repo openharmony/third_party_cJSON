@@ -2,7 +2,7 @@
     "name": "@ohos/cJSON",
     "description": "Third-party open-source software cJSON | Ultralightweight JSON parser in ANSI C.",
     "version": "3.1",
-    "license": " MIT License",
+    "license": "MIT",
     "publishAs": "code-segment",
     "segment": {
         "destPath": "third_party/cJSON"
