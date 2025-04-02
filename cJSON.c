@@ -406,10 +406,11 @@ CJSON_PUBLIC(char*) cJSON_SetValuestring(cJSON *object, const char *valuestring)
         return NULL;
     }
     /* return NULL if the object is corrupted */
-    if (object->valuestring == NULL)
+    if (object->valuestring == NULL || valuestring == NULL)
     {
         return NULL;
     }
+
     if (strlen(valuestring) <= strlen(object->valuestring))
     {
         strcpy(object->valuestring, valuestring);
