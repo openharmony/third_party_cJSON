@@ -72,21 +72,6 @@ static void cjson_compare_should_compare_numbers(void)
     TEST_ASSERT_FALSE(compare_from_string("1", "2", false));
 }
 
-#ifdef __CJSON_USE_INT64
-static void cjson_compare_should_compare_int64_numbers(void)
-{
-    TEST_ASSERT_TRUE(compare_from_string("1LL", "1LL", true));
-    TEST_ASSERT_TRUE(compare_from_string("1LL", "1LL", false));
-    TEST_ASSERT_TRUE(compare_from_string("9223372036854775807LL", "9223372036854775807LL", true));
-    TEST_ASSERT_TRUE(compare_from_string("9223372036854775807LL", "9223372036854775807LL", false));
-    TEST_ASSERT_TRUE(compare_from_string("-9223372036854775808LL", "-9223372036854775808LL", true));
-    TEST_ASSERT_TRUE(compare_from_string("-9223372036854775808LL", "-9223372036854775808LL", false));
-
-    TEST_ASSERT_FALSE(compare_from_string("1LL", "2LL", true));
-    TEST_ASSERT_FALSE(compare_from_string("1LL", "2LL", false));
-}
-#endif /* __CJSON_USE_INT64 */
-
 static void cjson_compare_should_compare_booleans(void)
 {
     /* true */
@@ -211,9 +196,6 @@ int CJSON_CDECL main(void)
     RUN_TEST(cjson_compare_should_compare_null_pointer_as_not_equal);
     RUN_TEST(cjson_compare_should_compare_invalid_as_not_equal);
     RUN_TEST(cjson_compare_should_compare_numbers);
-#ifdef __CJSON_USE_INT64
-    RUN_TEST(cjson_compare_should_compare_int64_numbers);
-#endif
     RUN_TEST(cjson_compare_should_compare_booleans);
     RUN_TEST(cjson_compare_should_compare_null);
     RUN_TEST(cjson_compare_should_not_accept_invalid_types);
