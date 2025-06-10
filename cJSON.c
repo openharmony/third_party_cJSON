@@ -378,7 +378,6 @@ loop_end:
             }
         }
     }
-    number_c_string[i] = '\0';
 
     number = strtod((const char*)number_c_string, (char**)&after_end);
     if (number_c_string == after_end)
