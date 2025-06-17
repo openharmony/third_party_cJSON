@@ -56,7 +56,7 @@ if (defined(ohos_lite)) {
     sources = [ "cJSON.c" ]
     public_configs = [ ":cJSON_config" ]
     innerapi_tags = [
-      "chipsetsdk",
+      "chipsetsdk_sp",
       "platformsdk_indirect",
     ]
     part_name = "cJSON"
