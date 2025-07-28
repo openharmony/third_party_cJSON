@@ -48,11 +48,23 @@ static void assert_parse_number(const char *string, int integer, double real)
     parse_buffer buffer = { 0, 0, 0, 0, { 0, 0, 0 } };
     buffer.content = (const unsigned char*)string;
     buffer.length = strlen(string) + sizeof("");
+    buffer.hooks = global_hooks;
 
     TEST_ASSERT_TRUE(parse_number(item, &buffer));
     assert_is_number(item);
     TEST_ASSERT_EQUAL_INT(integer, item->valueint);
     TEST_ASSERT_EQUAL_DOUBLE(real, item->valuedouble);
+}
+
+static void assert_parse_big_number(const char *string)
+{
+    parse_buffer buffer = { 0, 0, 0, 0, { 0, 0, 0 } };
+    buffer.content = (const unsigned char*)string;
+    buffer.length = strlen(string) + sizeof("");
+    buffer.hooks = global_hooks;
+
+    TEST_ASSERT_TRUE(parse_number(item, &buffer));
+    assert_is_number(item);
 }
 
 #ifdef __CJSON_USE_INT64
@@ -145,6 +157,13 @@ static void parse_number_should_parse_int64_numbers(void)
 }
 #endif /* __CJSON_USE_INT64 */
 
+static void parse_number_should_parse_big_numbers(void)
+{
+    assert_parse_big_number("9999999999999999999999999999999999999999999999912345678901234567");
+    assert_parse_big_number("9999999999999999999999999999999999999999999999912345678901234567E10");
+    assert_parse_big_number("999999999999999999999999999999999999999999999991234567890.1234567");
+}
+
 int CJSON_CDECL main(void)
 {
     /* initialize cJSON item */
@@ -158,5 +177,6 @@ int CJSON_CDECL main(void)
 #ifdef __CJSON_USE_INT64
     RUN_TEST(parse_number_should_parse_int64_numbers);
 #endif
+    RUN_TEST(parse_number_should_parse_big_numbers);
     return UNITY_END();
 }
