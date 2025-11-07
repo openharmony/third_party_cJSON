@@ -117,7 +117,7 @@ CJSON_PUBLIC(double) cJSON_GetNumberValue(const cJSON * const item)
 }
 
 /* This is a safeguard to prevent copy-pasters from using incompatible C and header files */
-#if (CJSON_VERSION_MAJOR != 1) || (CJSON_VERSION_MINOR != 7) || (CJSON_VERSION_PATCH != 17)
+#if (CJSON_VERSION_MAJOR != 1) || (CJSON_VERSION_MINOR != 7) || (CJSON_VERSION_PATCH != 19)
     #error cJSON.h and cJSON.c have different versions. Make sure that both have the same.
 #endif
 
@@ -430,21 +430,33 @@ CJSON_PUBLIC(double) cJSON_SetNumberHelper(cJSON *object, double number)
     return object->valuedouble = number;
 }
 
+/* Note: when passing a NULL valuestring, cJSON_SetValuestring treats this as an error and return NULL */
 CJSON_PUBLIC(char*) cJSON_SetValuestring(cJSON *object, const char *valuestring)
 {
     char *copy = NULL;
+    size_t v1_len;
+    size_t v2_len;
     /* if object's type is not cJSON_String or is cJSON_IsReference, it should not set valuestring */
     if ((object == NULL) || !(object->type & cJSON_String) || (object->type & cJSON_IsReference))
     {
         return NULL;
     }
-    /* return NULL if the object is corrupted */
+    /* return NULL if the object is corrupted or valuestring is NULL */
     if (object->valuestring == NULL || valuestring == NULL)
     {
         return NULL;
     }
-    if (strlen(valuestring) <= strlen(object->valuestring))
+
+    v1_len = strlen(valuestring);
+    v2_len = strlen(object->valuestring);
+
+    if (v1_len <= v2_len)
     {
+        /* strcpy does not handle overlapping string: [X1, X2] [Y1, Y2] => X2 < Y1 or Y2 < X1 */
+        if (!( valuestring + v1_len < object->valuestring || object->valuestring + v2_len < valuestring ))
+        {
+            return NULL;
+        }
         strcpy(object->valuestring, valuestring);
         return object->valuestring;
     }
@@ -600,10 +612,10 @@ static cJSON_bool print_number(const cJSON * const item, printbuffer * const out
     {
         length = sprintf((char*)number_buffer, "null");
     }
-	else if(d == (double)item->valueint)
-	{
-		length = sprintf((char*)number_buffer, "%d", item->valueint);
-	}
+    else if(d == (double)item->valueint)
+    {
+        length = sprintf((char*)number_buffer, "%d", item->valueint);
+    }
     else
     {
         /* Try 15 decimal places of precision to avoid nonsignificant nonzero digits */
@@ -926,6 +938,7 @@ fail:
     if (output != NULL)
     {
         input_buffer->hooks.deallocate(output);
+        output = NULL;
     }
 
     if (input_pointer != NULL)
@@ -1268,6 +1281,7 @@ static unsigned char *print(const cJSON * const item, cJSON_bool format, const i
 
         /* free the buffer */
         hooks->deallocate(buffer->buffer);
+        buffer->buffer = NULL;
     }
 
     return printed;
@@ -1276,11 +1290,13 @@ fail:
     if (buffer->buffer != NULL)
     {
         hooks->deallocate(buffer->buffer);
+        buffer->buffer = NULL;
     }
 
     if (printed != NULL)
     {
         hooks->deallocate(printed);
+        printed = NULL;
     }
 
     return NULL;
@@ -1321,6 +1337,7 @@ CJSON_PUBLIC(char *) cJSON_PrintBuffered(const cJSON *item, int prebuffer, cJSON
     if (!print_value(item, &p))
     {
         global_hooks.deallocate(p.buffer);
+        p.buffer = NULL;
         return NULL;
     }
 
@@ -3174,4 +3191,5 @@ CJSON_PUBLIC(void *) cJSON_malloc(size_t size)
 CJSON_PUBLIC(void) cJSON_free(void *object)
 {
     global_hooks.deallocate(object);
+    object = NULL;
 }
