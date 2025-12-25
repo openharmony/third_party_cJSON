@@ -32,10 +32,6 @@
                     "name": "//third_party/cJSON:cjson"
                 },
                 {
-                    "header": {
-                        "header_base": "//third_party/cJSON",
-                        "header_files": []
-                    },
                     "name": "//third_party/cJSON:cjson_static"
                 }
             ],
