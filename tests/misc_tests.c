@@ -27,6 +27,7 @@
 #include "unity/examples/unity_config.h"
 #include "unity/src/unity.h"
 #include "common.h"
+#include <math.h>
 
 static void cjson_array_foreach_should_loop_over_arrays(void)
 {
@@ -478,8 +479,8 @@ static void cjson_functions_should_not_crash_with_null_pointers(void)
     TEST_ASSERT_NULL(cJSON_SetValuestring(corruptedString, "test"));
     TEST_ASSERT_NULL(cJSON_SetValuestring(item, NULL));
     cJSON_Minify(NULL);
-    /* skipped because it is only used via a macro that checks for NULL */
-    /* cJSON_SetNumberHelper(NULL, 0); */
+    /* cJSON_SetNumberHelper should handle NULL gracefully */
+    TEST_ASSERT_TRUE(isnan(cJSON_SetNumberHelper(NULL, 0)));
 
     /* restore corrupted item2 to delete it */
     item2->prev = originalPrev;
