@@ -11,7 +11,6 @@
 #See the License for the specific language governing permissions and
 #limitations under the License.
 
-
 if (defined(ohos_lite)) {
   config("cjson_config") {
     include_dirs = [ "//third_party/cJSON" ]
@@ -56,6 +55,9 @@ if (defined(ohos_lite)) {
     branch_protector_ret = "pac_ret"
     sources = [ "cJSON.c" ]
     public_configs = [ ":cJSON_config" ]
+    if (!is_mingw) {
+      version_script = "libcjson.map"
+    }
     innerapi_tags = [
       "chipsetsdk_sp",
       "platformsdk_indirect",
