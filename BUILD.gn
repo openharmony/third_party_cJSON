@@ -55,7 +55,7 @@ if (defined(ohos_lite)) {
     branch_protector_ret = "pac_ret"
     sources = [ "cJSON.c" ]
     public_configs = [ ":cJSON_config" ]
-    if (!is_mingw) {
+    if (!is_mingw && !is_mac) {
       version_script = "libcjson.map"
     }
     innerapi_tags = [
